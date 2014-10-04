@@ -1,1 +1,1 @@
-web: cd akinator && gunicorn akinator/akinator/wsgi:application --log-file -
+web: cd akinator && gunicorn akinator.wsgi --log-file -
