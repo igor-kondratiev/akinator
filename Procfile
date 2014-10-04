@@ -1,1 +1,1 @@
-web: gunicorn akinator/akinator/wsgi.py --log-file -
+web: gunicorn akinator.akinator.wsgi --log-file -
