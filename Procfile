@@ -1,1 +1,1 @@
-web: gunicorn akinator.wsgi --log-file -
+web: gunicorn akinator/kinator.wsgi --log-file -
