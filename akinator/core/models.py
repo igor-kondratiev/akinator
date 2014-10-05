@@ -1,5 +1,8 @@
 # coding=utf-8
 from django.db import models
+from logic.AkinatorDataSource import AkinatorDataSource, ANSWERS
+from logic.AkinatorDataSource import Entity as AkinatorEntity
+from logic.AkinatorDataSource import Question as AkinatorQuestion
 
 
 class Entity(models.Model):
@@ -41,3 +44,42 @@ class AnswersDistribution(models.Model):
         verbose_name_plural = u'ответы'
 
         unique_together = ('entity', 'question')
+
+
+class DBDataSource(object, AkinatorDataSource):
+    """
+    Adapter for database objects to use them with akinator
+    """
+    def __init__(self):
+        super(DBDataSource, self).__init__()
+
+        self.__entities = {}
+        for e in Entity.objects.all():
+            self.__entities[e.pk] = AkinatorEntity(e.pk, e.name, e.description)
+
+        self.__questions = {}
+        for q in Question.objects.all():
+            self.__questions[q.pk] = AkinatorQuestion(e.pk, e.caption, e.text)
+
+        self.__answers = {}
+        for d in AnswersDistribution.objects.all():
+            key_tuple = (d.entity.pk, d.question.pk)
+            self.__answers[key_tuple] = {
+                ANSWERS.YES: d.yes_count,
+                ANSWERS.NO: d.no_count,
+            }
+
+    def get_entities_list(self):
+        return self.__entities.values()
+
+    def get_entity(self, key):
+        return self.__entities[key]
+
+    def get_questions_list(self):
+        return self.__questions.values()
+
+    def get_question(self, key):
+        return self.__questions[key]
+
+    def get_answers_count(self, entity_key, question_key):
+        return self.__answers[(entity_key, question_key)]
