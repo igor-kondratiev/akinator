@@ -39,3 +39,5 @@ class AnswersDistribution(models.Model):
     class Meta:
         verbose_name = u'ответы'
         verbose_name_plural = u'ответы'
+
+        unique_together = ('entity', 'question')
