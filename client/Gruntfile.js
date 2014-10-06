@@ -23,7 +23,16 @@ module.exports = function (grunt) {
 
   // Define the configuration for all the tasks
   grunt.initConfig({
-
+      html2js: {
+          options: {
+              base: 'app'
+              // custom options, see below
+          },
+          main: {
+              src: ['app/**/*.tpl.html'],
+              dest: 'app/scripts/templates.js'
+          }
+      },
     // Project settings
     yeoman: appConfig,
 
