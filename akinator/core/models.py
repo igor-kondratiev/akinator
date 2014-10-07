@@ -18,11 +18,10 @@ class Entity(models.Model):
 
 
 class Question(models.Model):
-    caption = models.TextField(max_length=100, verbose_name=u'Название')
     text = models.TextField(verbose_name=u'Текст вопроса')
 
     def __unicode__(self):
-        return unicode(self.caption)
+        return unicode(self.text)
 
     class Meta:
         verbose_name = u'вопрос'
@@ -35,6 +34,7 @@ class AnswersDistribution(models.Model):
 
     yes_count = models.PositiveIntegerField(verbose_name=u'Ответов \'Да\'')
     no_count = models.PositiveIntegerField(verbose_name=u'Ответов \'Нет\'')
+    dm_count = models.PositiveIntegerField(verbose_name=u'Ответов \'Не имеет значение\'')
 
     def __unicode__(self):
         return u'{0} - {1}'.format(self.entity, self.question)
@@ -46,7 +46,7 @@ class AnswersDistribution(models.Model):
         unique_together = ('entity', 'question')
 
 
-class DBDataSource(object, AkinatorDataSource):
+class DBDataSource(AkinatorDataSource):
     """
     Adapter for database objects to use them with akinator
     """
@@ -59,15 +59,22 @@ class DBDataSource(object, AkinatorDataSource):
 
         self.__questions = {}
         for q in Question.objects.all():
-            self.__questions[q.pk] = AkinatorQuestion(e.pk, e.caption, e.text)
+            self.__questions[q.pk] = AkinatorQuestion(q.pk, q.text)
 
         self.__answers = {}
         for d in AnswersDistribution.objects.all():
             key_tuple = (d.entity.pk, d.question.pk)
-            self.__answers[key_tuple] = {
+            answers = {
                 ANSWERS.YES: d.yes_count,
                 ANSWERS.NO: d.no_count,
+                ANSWERS.DOES_NOT_MATTER: d.dm_count,
             }
+
+            total_answers = sum(x for x in answers.itervalues())
+            for k in answers:
+                answers[k] = answers[k] * 100.0 / total_answers
+
+            self.__answers[key_tuple] = answers
 
     def get_entities_list(self):
         return self.__entities.values()
@@ -82,4 +89,9 @@ class DBDataSource(object, AkinatorDataSource):
         return self.__questions[key]
 
     def get_answers_count(self, entity_key, question_key):
-        return self.__answers[(entity_key, question_key)]
+        default_distribution = {
+            ANSWERS.YES: 0.05,
+            ANSWERS.NO: 0.05,
+            ANSWERS.DOES_NOT_MATTER: 0.90,
+        }
+        return self.__answers.get((entity_key, question_key), default_distribution)
