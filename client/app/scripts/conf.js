@@ -18,8 +18,11 @@ angular.module('app')
                 controller: 'AboutController'
             })
             .state('game', {
-                url: '/game/:stage',
+                url: '/game',
                 templateUrl: 'views/game.tpl.html',
-                controller: 'GameController'
             })
+            .state('stage', {
+                url: '/game/:stage',
+                templateUrl: 'views/question.tpl.html'
+            });
     }]);

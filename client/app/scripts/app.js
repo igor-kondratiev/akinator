@@ -1,7 +1,6 @@
 'use strict';
-
-angular.module('controllers',[]);
 angular.module('services',[]);
+angular.module('controllers',[]);
 /**
  * @ngdoc overview
  * @name clientApp
@@ -11,4 +10,4 @@ angular.module('services',[]);
  * Main module of the application.
  */
 angular
-  .module('app', ['controllers','services','ui.router']);
+  .module('app', ['controllers','services','ui.router', 'ngMock']);
