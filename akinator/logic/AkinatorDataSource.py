@@ -4,6 +4,8 @@ from abc import ABCMeta, abstractmethod
 class ANSWERS(object):
     YES = 'yes'
     NO = 'no'
+    DO_NOT_KNOW = 'do_not_know'
+    DOES_NOT_MATTER = 'does_not_matter'
 
 
 class Entity(object):
@@ -20,9 +22,8 @@ class Question(object):
     """
     Akinator entity to describe question
     """
-    def __init__(self, key, caption, text):
+    def __init__(self, key, text):
         self.key = key
-        self.caption = caption
         self.text = text
 
 
