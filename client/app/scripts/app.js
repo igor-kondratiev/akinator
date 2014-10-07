@@ -1,5 +1,7 @@
 'use strict';
 
+angular.module('controllers',[]);
+angular.module('services',[]);
 /**
  * @ngdoc overview
  * @name clientApp
@@ -9,4 +11,4 @@
  * Main module of the application.
  */
 angular
-  .module('clientApp', []);
+  .module('app', ['controllers','services','ui.router']);
