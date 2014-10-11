@@ -4,8 +4,10 @@ from abc import ABCMeta, abstractmethod
 class ANSWERS(object):
     YES = 'yes'
     NO = 'no'
-    DO_NOT_KNOW = 'do_not_know'
-    DOES_NOT_MATTER = 'does_not_matter'
+    DO_NOT_KNOW = 'dnn'
+    DOES_NOT_MATTER = 'dnm'
+
+    RANGE = (YES, NO, DOES_NOT_MATTER)
 
 
 class Entity(object):
