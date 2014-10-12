@@ -1,13 +1,11 @@
 from operator import itemgetter
-import random
 from uuid import uuid4
 from math import log
 from logic.AkinatorDataSource import AkinatorDataSource, ANSWERS
 
 
-class AKINATOR_STAGES(object):
-    STAGE_1 = 1
-    STAGE_2 = 2
+class AkinatorError(Exception):
+    pass
 
 
 class Akinator(object):
@@ -20,6 +18,8 @@ class Akinator(object):
     def __init__(self, data_source):
         super(Akinator, self).__init__()
         self.__id = self.__generate_id()
+
+        self.__finish_callback = None
 
         if not isinstance(data_source, AkinatorDataSource):
             raise TypeError("\'data_source\' must be an instance of AkinatorDataSource")
@@ -36,14 +36,13 @@ class Akinator(object):
         self.__current_question = None
         self.__select_question()
 
-        question_count = len(self.__data_source.get_questions_list())
-        self.__max_history_length = {
-            AKINATOR_STAGES.STAGE_1: int(0.5 * question_count),
-            AKINATOR_STAGES.STAGE_2: int(0.7 * question_count)
-        }
+        questions_count = len(self.__data_source.get_questions_list())
+        self.__max_history_length = 0.6 * questions_count
 
-        self.__stage = AKINATOR_STAGES.STAGE_1
         self.__history = {}
+        self.__hypothesis = None
+
+        self.__is_finished = False
 
     def __generate_id(self):
         """
@@ -105,18 +104,34 @@ class Akinator(object):
 
             for e in self.__entities_list:
                 if self.__distribution[e] >= self.CRITICAL_LEVEL:
+                    self.__hypothesis = e
                     return e, None
 
-        if len(self.__history) >= self.__max_history_length[self.__stage]:
+        if len(self.__history) >= self.__max_history_length:
             results = self.__distribution.items()
             results.sort(key=lambda (x, y): -y)
 
             winner, prc = results[0]
 
+            self.__hypothesis = winner
             return winner, None
 
         self.__current_question = None
         return None, self.__select_question()
+
+    def hypothesis_accepted(self):
+        if self.__hypothesis:
+            self.__save_history(self.__hypothesis)
+            self.__on_finish()
+        else:
+            raise AkinatorError("No hypothesis found!")
+
+    def hypothesis_declined(self, real_entity):
+        if self.__hypothesis:
+            self.__save_history(real_entity)
+            self.__on_finish()
+        else:
+            raise AkinatorError("No hypothesis found!")
 
     # TODO: remove, this is only for debug
     def print_status(self):
@@ -127,6 +142,16 @@ class Akinator(object):
         for entity, score in results:
             print u'{0} - {1:.2f}%'.format(entity.name, 100*score)
 
+    def set_finish_callback(self, callback):
+        self.__finish_callback = callback
+
+    def __on_finish(self):
+        self.__is_finished = True
+        if self.__finish_callback:
+            self.__finish_callback()
+
+    def __save_history(self, entity):
+        pass
 
     @property
     def game_id(self):
@@ -135,3 +160,7 @@ class Akinator(object):
     @property
     def current_question(self):
         return self.__current_question
+
+    @property
+    def is_finished(self):
+        return self.__is_finished
