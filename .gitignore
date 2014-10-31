@@ -58,3 +58,6 @@ target/
 
 # Sqlite
 *.sqlite3
+
+# project local settings
+local_settings.py

@@ -60,7 +60,11 @@ WSGI_APPLICATION = 'akinator.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'HOST': 'ec2-54-197-238-239.compute-1.amazonaws.com',
+        'PORT': 5432,
+        'USER': 'uehasazzspkogx',
+        'NAME': 'ddn251la96pfkt',
+        'PASSWORD': 'CJ77JDRcegzkr9QN8qRQQC-Mow',
     }
 }
 
@@ -121,3 +125,8 @@ LOGGING = {
         }
     }
 }
+
+try:
+    from local_settings import *
+except ImportError:
+    print 'Local settings not found, using defaults...'
