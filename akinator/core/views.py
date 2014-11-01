@@ -44,7 +44,7 @@ def get_game(request):
 def process_response(request):
     akinator = get_game(request)
 
-    answer = ANSWERS_MAP[int(request.POST['answer'])]
+    answer = ANSWERS_MAP[int(request.REQUEST['answer'])]
     entity, question = akinator.process_answer(answer)
 
     response = {
