@@ -66,8 +66,9 @@ def current_stats(request):
         'entities': []
     }
 
+    count = request.REQUEST['count']
     akinator = get_game(request)
-    top = akinator.get_top_hypothesis(5)
+    top = akinator.get_top_hypothesis(count)
 
     for entity, score in top:
         content['entities'].append({

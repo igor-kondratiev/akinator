@@ -149,7 +149,7 @@ class Akinator(object):
         results = self.__distribution.items()
         results.sort(key=lambda (x, y): -y)
 
-        return results
+        return results[:count]
 
     def set_finish_callback(self, callback):
         self.__finish_callback = callback
