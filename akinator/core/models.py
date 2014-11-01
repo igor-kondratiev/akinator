@@ -116,3 +116,31 @@ class DBDataSource(AkinatorDataSource):
 
         result = GameResult(entity=e, game_length=game_length, success=success)
         result.save()
+
+        for question, answer in history:
+            e = Entity.objects.get(pk=entity.key)
+            q = Question.objects.get(pk=question.key)
+
+            if (entity.key, question.key) in self.__answers:
+                distribution = AnswersDistribution(entity=e, question=q, yes_count=5, no_count=5, dm_count=5)
+
+                if answer == ANSWERS.YES:
+                    distribution.yes_count = 90
+                elif answer == ANSWERS.NO:
+                    distribution.no_count = 90
+                else:
+                    distribution.dm_count = 90
+
+                distribution.save()
+
+            else:
+                distribution = AnswersDistribution.objects.get(entity=e, question=q)
+
+                if answer == ANSWERS.YES:
+                    distribution.yes_count += 1
+                elif answer == ANSWERS.NO:
+                    distribution.no_count += 1
+                else:
+                    distribution.dm_count += 1
+
+                distribution.save()
