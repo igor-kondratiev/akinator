@@ -32,9 +32,16 @@ def start_game(request):
     return JsonResponse(content)
 
 
-def process_response(request):
+def get_game(request):
+    """
+    Helper function to fetch game based on request data
+    """
     session_id = request.POST['sessionId']
-    akinator = sessions_pool[session_id]
+    return sessions_pool[session_id]
+
+
+def process_response(request):
+    akinator = get_game(request)
 
     answer = ANSWERS_MAP[int(request.POST['answer'])]
     entity, question = akinator.process_answer(answer)
@@ -52,3 +59,20 @@ def process_response(request):
         response['nextQuestion'] = question.text
 
     return JsonResponse(response)
+
+
+def current_stats(request):
+    content = {
+        'entities': []
+    }
+
+    akinator = get_game(request)
+    top = akinator.get_top_hypothesis(5)
+
+    for entity, score in top:
+        content['entities'].append({
+            'name': entity.name,
+            'score': score,
+        })
+
+    return JsonResponse(content)

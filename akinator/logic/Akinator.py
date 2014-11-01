@@ -142,6 +142,15 @@ class Akinator(object):
         for entity, score in results:
             print u'{0} - {1:.2f}%'.format(entity.name, 100*score)
 
+    def get_top_hypothesis(self, count):
+        """
+        Returns top count hypothesis in current state
+        """
+        results = self.__distribution.items()
+        results.sort(key=lambda (x, y): -y)
+
+        return results
+
     def set_finish_callback(self, callback):
         self.__finish_callback = callback
 
