@@ -37,7 +37,7 @@ def get_game(request):
     """
     Helper function to fetch game based on request data
     """
-    session_id = request.POST['sessionId']
+    session_id = request.REQUEST['sessionId']
     return sessions_pool[session_id]
 
 
