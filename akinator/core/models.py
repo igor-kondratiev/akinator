@@ -46,6 +46,12 @@ class AnswersDistribution(models.Model):
         unique_together = ('entity', 'question')
 
 
+class GameResult(models.Model):
+    entity = models.ForeignKey(Entity)
+    success = models.BooleanField()
+    game_length = models.PositiveIntegerField()
+
+
 class DBDataSource(AkinatorDataSource):
     """
     Adapter for database objects to use them with akinator
@@ -104,5 +110,9 @@ class DBDataSource(AkinatorDataSource):
         self.__entities[e.pk] = akinator_entity
         return akinator_entity
 
-    def save_history(self, history, entity):
-        pass
+    def save_history(self, history, entity, success):
+        e = Entity.objects.get(pk=entity.key)
+        game_length = len(history)
+
+        result = GameResult(entity=e, game_length=game_length, success=success)
+        result.save()

@@ -60,5 +60,5 @@ class AkinatorDataSource(object):
         pass
 
     @abstractmethod
-    def save_history(self, history, entity):
+    def save_history(self, history, entity, success):
         pass
