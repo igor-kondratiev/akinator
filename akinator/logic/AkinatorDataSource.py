@@ -54,3 +54,11 @@ class AkinatorDataSource(object):
     @abstractmethod
     def get_answers_count(self, entity_key, question_key):
         pass
+
+    @abstractmethod
+    def create_entity(self, name, description):
+        pass
+
+    @abstractmethod
+    def save_history(self, history, entity):
+        pass

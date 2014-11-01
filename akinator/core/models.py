@@ -95,3 +95,14 @@ class DBDataSource(AkinatorDataSource):
             ANSWERS.DOES_NOT_MATTER: 0.90,
         }
         return self.__answers.get((entity_key, question_key), default_distribution)
+
+    def create_entity(self, name, description):
+        e = Entity(name, description)
+        e.save()
+
+        akinator_entity = AkinatorEntity(e.pk, e.name, e.description)
+        self.__entities[e.pk] = akinator_entity
+        return akinator_entity
+
+    def save_history(self, history, entity):
+        pass

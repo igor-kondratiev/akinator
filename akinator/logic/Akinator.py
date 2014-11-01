@@ -126,7 +126,8 @@ class Akinator(object):
         else:
             raise AkinatorError("No hypothesis found!")
 
-    def hypothesis_declined(self, real_entity):
+    def hypothesis_declined(self, name, description):
+        real_entity = self.__data_source.create_entity(name, description)
         if self.__hypothesis:
             self.__save_history(real_entity)
             self.__on_finish()
@@ -160,7 +161,7 @@ class Akinator(object):
             self.__finish_callback()
 
     def __save_history(self, entity):
-        pass
+        self.__data_source.save_history(self.__history, entity)
 
     @property
     def game_id(self):

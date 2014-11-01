@@ -77,3 +77,18 @@ def current_stats(request):
         })
 
     return JsonResponse(content)
+
+
+def end_game(request):
+    akinator = get_game(request)
+
+    status = request.REQUEST['status']
+    if status == 'OK':
+        akinator.hypothesis_accepted()
+    else:
+        name = request.REQUEST['name']
+        description = request.REQUEST['description']
+
+        akinator.hypothesis_declined(name, description)
+
+    return JsonResponse('OK')
