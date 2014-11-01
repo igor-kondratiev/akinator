@@ -1,6 +1,7 @@
 from functools import partial
+from django.db.models import Avg
 from django.http import JsonResponse
-from core.models import DBDataSource
+from core.models import DBDataSource, GameResult
 from logic.Akinator import Akinator
 from logic.AkinatorDataSource import ANSWERS
 
@@ -92,3 +93,17 @@ def end_game(request):
         akinator.hypothesis_declined(name, description)
 
     return JsonResponse('OK')
+
+
+def statistics(request):
+    games_count = GameResult.objects.count()
+    win_rate = GameResult.objects.filter(success=True).count * 100.0 / games_count
+    avg_game_length = GameResult.objects.all().aggregate(Avg('game_length'))['game_length__avg']
+
+    content = {
+        'gamesCount': games_count,
+        'winRate': win_rate,
+        'avgLength': avg_game_length,
+    }
+
+    return JsonResponse(content)
