@@ -92,7 +92,7 @@ def end_game(request):
 
         akinator.hypothesis_declined(name, description)
 
-    return JsonResponse('OK')
+    return JsonResponse({'status':'OK'})
 
 
 def statistics(request):
