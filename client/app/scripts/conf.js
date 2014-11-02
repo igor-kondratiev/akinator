@@ -23,7 +23,7 @@ angular.module('app')
             })
             .state('rules', {
                 url: '/rules',
-                templateUrl: '../views/rules.tpl.html'
+                templateUrl: 'views/rules.tpl.html'
             })
             .state('game', {
                 url: '/game/:stage',
