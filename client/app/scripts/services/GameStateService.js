@@ -1,34 +1,5 @@
 angular.module('services')
     .service('GameStateService', ['ApiClient', '$state', '$rootScope', 'ChartService', function (ApiClient, $state, $rootScope, ChartService) {
-        var gameState = {
-            sessionId: '',
-            stage: 0,
-            isFinish: false,
-            isReady: false,
-            question: '',
-            result: {
-                book: '',
-                description: ''
-            },
-            variants: [
-                {
-                    title: 'Чупакабра',
-                    value: 25
-                },
-                {
-                    title: 'Термінатор',
-                    value: 30
-                },
-                {
-                    title: 'Анатолій Вассерман',
-                    value: 30
-                },
-                {
-                    title: 'Чубака',
-                    value: 15
-                }
-            ]
-        }
 
         return {
             createGame: function () {
@@ -59,9 +30,9 @@ angular.module('services')
                 $state.go('rules');
             },
             makeAnswer: function (answerCode) {
-                return ApiClient.getQuestion(gameState.sessionId, answerCode).then(function (response) {
+                return ApiClient.getQuestion($rootScope.gameState.sessionId, answerCode).then(function (response) {
                     if (response.nextQuestion) {
-                        ApiClient.getStats({sessionId: gameState.sessionId, count: 5}).then(function (stats) {
+                        ApiClient.getStats({sessionId: $rootScope.gameState.sessionId, count: 5}).then(function (stats) {
                             $rootScope.gameState.stats = stats.entities;
                             ChartService.drawChart(stats.entities);
                         });
