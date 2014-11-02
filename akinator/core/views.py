@@ -1,6 +1,7 @@
 from functools import partial
 from django.db.models import Avg
-from django.http import JsonResponse
+from django.http import HttpResponse
+import json
 from core.models import DBDataSource, GameResult
 from logic.Akinator import Akinator
 from logic.AkinatorDataSource import ANSWERS
@@ -14,6 +15,13 @@ ANSWERS_MAP = {
     2: ANSWERS.DOES_NOT_MATTER,
     3: ANSWERS.DO_NOT_KNOW,
 }
+
+
+class JsonResponse(HttpResponse):
+    def __init__(self, content, **kwargs):
+        kwargs.setdefault('content_type', 'application/json')
+        jContent = json.dumps(content, ensure_ascii=False).encode('utf-16')
+        super(JsonResponse, self).__init__(jContent, **kwargs)
 
 
 def _remove_game(session_id):
@@ -30,6 +38,7 @@ def start_game(request):
         'sessionId': session.game_id,
         'firstQuestion': session.current_question.text,
     }
+
     return JsonResponse(content)
 
 
@@ -83,8 +92,8 @@ def current_stats(request):
 def end_game(request):
     akinator = get_game(request)
 
-    status = request.REQUEST['status']
-    if status == 'OK':
+    status = request.REQUEST['answer']
+    if int(status) == 4:
         akinator.hypothesis_accepted()
     else:
         name = request.REQUEST['name']
@@ -92,7 +101,7 @@ def end_game(request):
 
         akinator.hypothesis_declined(name, description)
 
-    return JsonResponse({'status':'OK'})
+    return JsonResponse({'status': 'OK'})
 
 
 def statistics(request):
