@@ -13,15 +13,19 @@ angular.module('app')
                 controller: 'StatisticsController'
             })
             .state('about', {
-                url: '/statistics',
+                url: '/about',
                 templateUrl: 'views/about.tpl.html',
                 controller: 'AboutController'
             })
-            .state('game', {
-                url: '/game',
-                templateUrl: 'views/game.tpl.html',
+            .state('end', {
+                url: '/end',
+                templateUrl: 'views/end.tpl.html'
             })
-            .state('stage', {
+            .state('rules', {
+                url: '/rules',
+                templateUrl: '../views/rules.tpl.html'
+            })
+            .state('game', {
                 url: '/game/:stage',
                 templateUrl: 'views/question.tpl.html'
             });

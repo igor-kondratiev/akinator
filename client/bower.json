@@ -5,7 +5,12 @@
     "angular": "~1.2.0",
     "json3": "~3.3.1",
     "es5-shim": "~3.1.0",
-    "bootstrap": "~3.2.0"
+    "bootstrap": "~3.2.0",
+    "angular-ui-router": "~0.2.11",
+    "angular-mocks": "~1.2.26",
+    "d3": "~3.4.13",
+    "nvd3": "~1.1.15-beta",
+    "angularjs-nvd3-directives": "~0.0.7"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",

@@ -1,1 +1,17 @@
-<h2>Statistics</h2>
+<h2>Статистика</h2>
+<div ng-controller="StatisticsController">
+    <div class="control-group">
+        <ul>
+            <li>
+                <span>Зіграно ігр: {{statistics.gamesCount}}</span>
+            </li>
+            <li>
+                <span>Виграно ігр: {{statistics.winRate}}</span>
+            </li>
+            <li>
+                <span>Середня тривалість гри: {{statistics.avgLength}}</span>
+            </li>
+        </ul>
+        <button type="button" class="btn btn-default" ng-click="update();">Оновити статистику</button>
+    </div>
+</div>

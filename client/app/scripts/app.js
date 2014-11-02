@@ -10,4 +10,4 @@ angular.module('controllers',[]);
  * Main module of the application.
  */
 angular
-  .module('app', ['controllers','services','ui.router', 'ngMock']);
+  .module('app', ['ui.router', 'controllers','services']);

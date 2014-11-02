@@ -2,40 +2,35 @@
 <html class="no-js">
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Akinator</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 </head>
-<body ng-app="app">
+<body ng-app="app" ng-controller="RootController">
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
     your browser</a> to improve your experience.</p>
 <![endif]-->
 
 <!-- Add your site or application content here -->
-<div class="container">
-    <div class="header">
-        <ul class="nav nav-pills pull-right">
-            <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
-            <li><a ui-sref-active="active" ui-sref="statistics">Statistics</a></li>
-            <li><a ui-sref-active="active" ui-sref="about">About</a></li>
-        </ul>
-        <h3 class="text-muted">Akinator. Next generation.</h3>
+<div class="container" ng-controller="GameController">
+    <ng-include src="'../views/header.tpl.html'"></ng-include>
+    <div>
+        <div ui-view=""></div>
     </div>
 
-    <div ui-view></div>
-
     <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> I'll find you</p>
+        <p><span class="glyphicon glyphicon-copyright-mark"></span> All rights reserved</p>
     </div>
 </div>
 
@@ -52,22 +47,31 @@
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/angular-mocks/angular-mocks.js"></script>
+<script src="bower_components/d3/d3.js"></script>
+<script src="bower_components/nvd3/nv.d3.js"></script>
+<script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/templates.js"></script>
+<script src="scripts/vendors/amchart/amcharts.js"></script>
+<script src="scripts/vendors/amchart/pie.js"></script>
 <script src="scripts/app.js"></script>
 <script src="scripts/conf.js"></script>
 <script src="scripts/run.js"></script>
-<script src="templates.js"></script>
 <script src="scripts/controllers/AboutController.js"></script>
 <script src="scripts/controllers/HomeController.js"></script>
 <script src="scripts/controllers/GameController.js"></script>
+<script src="scripts/controllers/RootController.js"></script>
 <script src="scripts/controllers/StatisticsController.js"></script>
 <script src="scripts/services/ApiClient.js"></script>
-<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-<script src="bower_components/angular-mocks/angular-mocks.js"></script>
-
+<script src="scripts/services/GameStateService.js"></script>
+<script src="scripts/services/ChartService.js"></script>
+<script src="scripts/controllers/NavBarController.js"></script>
+<script src="scripts/controllers/ChartController.js"></script>
 <!-- endbuild -->
 </body>
 </html>

@@ -1,16 +1,24 @@
-<div class="jumbotron">
-    <h1>Akinator</h1>
-    <p class="lead">
-        <img src="images/book.png" alt="I'm Yeoman"><br>
-        I know all.
-    </p>
-    <p><a class="btn btn-lg btn-success" ui-sref="game">Start game! <span class="glyphicon glyphicon-ok"></span></a></p>
-</div>
+<div>
+    <div class="jumbotron">
+        <h1>Акінатор</h1>
+        <p class="lead">
+            Книжки
+        </p>
+        <div ng-switch on="gameState.isStarted">
 
-<div class="row marketing">
-    <h4>I know all..</h4>
-    <p>
-        ...about all
-    </p>
-
+        <p ng-switch-when="true">
+            <a ng-if="!gameState.lastRequestSended" class="btn btn-lg btn-success" ui-sref="{{continueGameSref}}">Продовжити гру</a>
+            <a class="btn btn-lg btn-success" ng-click="restartGame();" ui-sref="rules">Грати заново!</a>
+        </p>
+        <p ng-switch-when="false">
+            <a class="btn btn-lg btn-success" ui-sref="rules">Перейти до гри!</a>
+        </p>
+        </div>
+    </div>
+    <div class="row marketing">
+        <h4>Я знаю все...</h4>
+        <p>
+            ...про книжки
+        </p>
+    </div>
 </div>

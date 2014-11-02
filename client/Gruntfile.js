@@ -18,12 +18,12 @@ module.exports = function (grunt) {
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
-    dist: 'dist'
+    dist: 'client_dist'
   };
 
   // Define the configuration for all the tasks
   grunt.initConfig({
-      html2js: {
+    html2js: {
           options: {
               base: 'app'
               // custom options, see below
@@ -406,7 +406,8 @@ module.exports = function (grunt) {
     'uglify',
     'filerev',
     'usemin',
-    'htmlmin'
+    'htmlmin',
+    'html2js'
   ]);
 
   grunt.registerTask('default', [
