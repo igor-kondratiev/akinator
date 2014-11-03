@@ -903,7 +903,7 @@ angular.module('services')
                 })
             },
             makeLastAnswer: function (params) {
-                return $http.post('/api/game/end', params)
+                return $http.post('/api/game/end/', params)
                     .success(function () {
 
                     }).then(function (result) {
