@@ -893,9 +893,11 @@ angular.module('services')
                 });
             },
             getQuestion: function (sessionId, answer) {
-                return $http.post('/api/game/next/', {
-                    sessionId: sessionId,
-                    answer: answer
+                return $http.get('/api/game/next', {
+                    params: {
+                        sessionId: sessionId,
+                        answer: answer
+                    }
                 }).success(function () {
 
                 }).then(function (result) {
@@ -903,7 +905,7 @@ angular.module('services')
                 })
             },
             makeLastAnswer: function (params) {
-                return $http.post('/api/game/end/', params)
+                return $http.get('/api/game/end', {params: params})
                     .success(function () {
 
                     }).then(function (result) {
