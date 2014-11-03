@@ -14,7 +14,7 @@ angular.module('services')
                     $rootScope.gameState.question = result.firstQuestion;
                     $state.go('game', {stage: 1});
                 });
-            }, 
+            },
             makeLastAnswer: function (params) {
                 params.sessionId = $rootScope.gameState.sessionId;
                 return ApiClient.makeLastAnswer(params).then(function () {
