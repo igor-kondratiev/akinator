@@ -32,7 +32,7 @@ angular.module('services')
                 });
             },
             getQuestion: function (sessionId, answer) {
-                return $http.post('/api/game/next', {
+                return $http.post('/api/game/next/', {
                     sessionId: sessionId,
                     answer: answer
                 }).success(function () {
