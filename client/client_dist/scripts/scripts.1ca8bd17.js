@@ -5,6 +5,7 @@ angular.module("views/about.tpl.html", []).run(["$templateCache", function($temp
     "<div class=\"panel panel-default\">\n" +
     "    <div class=\"panel-heading\">Про авторів</div>\n" +
     "    <div class=\"panel-body\">\n" +
+    "        <h3>Kondratiev&Co production></h3>\n" +
     "        Слава Україні!\n" +
     "    </div>\n" +
     "</div>");
