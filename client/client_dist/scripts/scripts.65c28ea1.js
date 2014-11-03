@@ -33,7 +33,7 @@ angular.module("views/end.tpl.html", []).run(["$templateCache", function($templa
     "                        <label class=\"col-sm-2 control-label\">Назва</label>\n" +
     "\n" +
     "                        <div class=\"col-sm-10\">\n" +
-    "                            <input type=\"email\"\n" +
+    "                            <input type=\"text\"\n" +
     "                                   class=\"form-control\"\n" +
     "                                   ng-model=\"lastAnswer.book.name\"\n" +
     "                                   placeholder=\"Назва книжки\">\n" +
