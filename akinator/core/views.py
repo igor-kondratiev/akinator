@@ -96,8 +96,8 @@ def end_game(request):
     if int(status) == 4:
         akinator.hypothesis_accepted()
     else:
-        name = request.REQUEST['name'].encode('utf-8')
-        description = request.REQUEST['description'].encode('utf-8')
+        name = request.REQUEST['name']
+        description = request.REQUEST['description']
 
         akinator.hypothesis_declined(name, description)
 
