@@ -96,8 +96,8 @@ def end_game(request):
     if int(status) == 4:
         akinator.hypothesis_accepted()
     else:
-        name = request.REQUEST['name']
-        description = request.REQUEST['description']
+        name = request.REQUEST['name'].encode('utf-8')
+        description = request.REQUEST['description'].encode('utf-8')
 
         akinator.hypothesis_declined(name, description)
 
@@ -106,7 +106,7 @@ def end_game(request):
 
 def statistics(request):
     games_count = GameResult.objects.count()
-    win_rate = GameResult.objects.filter(success=True).count * 100.0 / games_count
+    win_rate = GameResult.objects.filter(success=True).count() * 100.0 / games_count
     avg_game_length = GameResult.objects.all().aggregate(Avg('game_length'))['game_length__avg']
 
     content = {
