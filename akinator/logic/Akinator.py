@@ -13,7 +13,7 @@ class Akinator(object):
     Main class to handle game session.
     """
 
-    CRITICAL_LEVEL = 0.65
+    CRITICAL_LEVEL = 0.75
 
     def __init__(self, data_source):
         super(Akinator, self).__init__()
@@ -37,7 +37,7 @@ class Akinator(object):
         self.__select_question()
 
         questions_count = len(self.__data_source.get_questions_list())
-        self.__max_history_length = 0.6 * questions_count
+        self.__max_history_length = 0.7 * questions_count
 
         self.__history = {}
         self.__hypothesis = None
