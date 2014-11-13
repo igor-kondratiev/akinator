@@ -19,7 +19,7 @@ ANSWERS_MAP = {
 
 class JsonResponse(HttpResponse):
     def __init__(self, content, **kwargs):
-        kwargs.setdefault('content_type', 'application/json')
+        kwargs.setdefault('content_type', 'application/json; charset=utf-16')
         jContent = json.dumps(content, ensure_ascii=False).encode('utf-16')
         super(JsonResponse, self).__init__(jContent, **kwargs)
 
