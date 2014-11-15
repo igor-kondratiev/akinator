@@ -45,8 +45,8 @@ angular.module('controllers')
                 GameStateService.makeLastAnswer(lastAnswerParams);
             }
             $scope.makeAnswer = function (answerCode) {
-                GameStateService.makeAnswer(answerCode).then(function (stats) {
-                    ChartService.drawChart(stats);
+                GameStateService.makeAnswer(answerCode).then(function (response) {
+                    ChartService.drawChart(response.stats);
                 });
             }
 
