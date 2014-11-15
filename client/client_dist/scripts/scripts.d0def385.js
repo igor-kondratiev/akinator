@@ -1024,7 +1024,7 @@ angular.module('services')
             "startDuration" : 0.6
         };
         function addOther(entities) {
-            var summaryScore = _.reduce(entities, function(memo, num){ return memo.score + num.score; }, 0);
+            var summaryScore = _.reduce(_.pluck(entities, 'score'), function(memo, num){ return memo + num; },  0);
             entities.push({name: 'Інші', score: 1 - summaryScore})
         }
         function drawChart(entities) {
