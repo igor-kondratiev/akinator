@@ -7,25 +7,25 @@ angular.module('services')
         var chartConfig = {
             "type": "pie",
             "theme": "none",
-            "dataProvider": [{
-                "country": "Lithuania",
-                "value": 260
-            }, {
-                "country": "Ireland",
-                "value": 201
-            }, {
-                "country": "Germany",
-                "value": 65
-            }, {
-                "country": "Australia",
-                "value": 39
-            }, {
-                "country": "UK",
-                "value": 19
-            }, {
-                "country": "Latvia",
-                "value": 10
-            }],
+//            "dataProvider": [{
+//                "country": "Lithuania",
+//                "value": 260
+//            }, {
+//                "country": "Ireland",
+//                "value": 201
+//            }, {
+//                "country": "Germany",
+//                "value": 65
+//            }, {
+//                "country": "Australia",
+//                "value": 39
+//            }, {
+//                "country": "UK",
+//                "value": 19
+//            }, {
+//                "country": "Latvia",
+//                "value": 10
+//            }],
 
             "marginTop" : -180,
             "valueField": "score",
@@ -37,7 +37,12 @@ angular.module('services')
             "startEffect": 'easeOutSine',
             "startDuration" : 0.6
         };
+        function addOther(entities) {
+            var summaryScore = _.reduce(entities, function(memo, num){ return memo.score + num.score; }, 0);
+            entities.push({name: 'Інші', score: 1 - summaryScore})
+        }
         function drawChart(entities) {
+            addOther(entities);
             chartConfig.dataProvider = entities;
             var chart = AmCharts.makeChart("chartdiv",chartConfig ,0);
             chart.addListener('drawn', function(event) {
