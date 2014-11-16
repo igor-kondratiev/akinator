@@ -21,11 +21,11 @@ class Command(BaseCommand):
 
         print 'Loading books...'
         books_list = {}
-        with open(BOOKS_FILE, 'rb') as f:
-            b_reader = csv.DictReader(f, delimiter=';')
+        with open(BOOKS_FILE, 'r') as f:
+            b_reader = csv.DictReader(f, delimiter=',')
             for book in b_reader:
-                pk = book['id_b']
-                name = book['name'].decode('cp1251')
+                pk = int(book['id_b'])
+                name = book['name'].decode('utf8')
                 description = ''
 
                 db_book = Entity(name=name, description=description)
@@ -38,10 +38,10 @@ class Command(BaseCommand):
         print 'Loading questions...'
         questions_list = {}
         with open(QUESTIONS_FILE, 'rb') as f:
-            q_reader = csv.DictReader(f, delimiter=';')
+            q_reader = csv.DictReader(f, delimiter=',')
             for question in q_reader:
-                pk = question['id_q']
-                text = question['question'].decode('cp1251')
+                pk = int(question['id_q'])
+                text = question['question'].decode('utf8')
 
                 db_question = Question(text=text)
                 db_question.save()
@@ -52,7 +52,7 @@ class Command(BaseCommand):
 
         print 'Loading distributions...'
         with open(DISTRIBUTION_FILE, 'rb') as f:
-            d_reader = csv.DictReader(f, delimiter=';')
+            d_reader = csv.DictReader(f, delimiter=',')
             for distribution in d_reader:
                 book_id = int(distribution['id_b'])
                 question_id = int(distribution['id_q'])
