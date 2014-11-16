@@ -5,7 +5,7 @@ angular.module("views/about.tpl.html", []).run(["$templateCache", function($temp
     "<div class=\"panel panel-default\">\n" +
     "    <div class=\"panel-heading\">Про авторів</div>\n" +
     "    <div class=\"panel-body\">\n" +
-    "        <h3>Kondratiev&Co production></h3>\n" +
+    "        <h3>Kondratiev&Co production</h3>\n" +
     "        Слава Україні!\n" +
     "    </div>\n" +
     "</div>");
@@ -825,8 +825,8 @@ angular.module('controllers')
                 GameStateService.makeLastAnswer(lastAnswerParams);
             }
             $scope.makeAnswer = function (answerCode) {
-                GameStateService.makeAnswer(answerCode).then(function (stats) {
-                    ChartService.drawChart(stats);
+                GameStateService.makeAnswer(answerCode).then(function (response) {
+                    ChartService.drawChart(response.stats);
                 });
             }
 
@@ -993,25 +993,25 @@ angular.module('services')
         var chartConfig = {
             "type": "pie",
             "theme": "none",
-            "dataProvider": [{
-                "country": "Lithuania",
-                "value": 260
-            }, {
-                "country": "Ireland",
-                "value": 201
-            }, {
-                "country": "Germany",
-                "value": 65
-            }, {
-                "country": "Australia",
-                "value": 39
-            }, {
-                "country": "UK",
-                "value": 19
-            }, {
-                "country": "Latvia",
-                "value": 10
-            }],
+//            "dataProvider": [{
+//                "country": "Lithuania",
+//                "value": 260
+//            }, {
+//                "country": "Ireland",
+//                "value": 201
+//            }, {
+//                "country": "Germany",
+//                "value": 65
+//            }, {
+//                "country": "Australia",
+//                "value": 39
+//            }, {
+//                "country": "UK",
+//                "value": 19
+//            }, {
+//                "country": "Latvia",
+//                "value": 10
+//            }],
 
             "marginTop" : -180,
             "valueField": "score",
@@ -1023,7 +1023,12 @@ angular.module('services')
             "startEffect": 'easeOutSine',
             "startDuration" : 0.6
         };
+        function addOther(entities) {
+            var summaryScore = _.reduce(_.pluck(entities, 'score'), function(memo, num){ return memo + num; },  0);
+            entities.push({name: 'Інші', score: 1 - summaryScore})
+        }
         function drawChart(entities) {
+            addOther(entities);
             chartConfig.dataProvider = entities;
             var chart = AmCharts.makeChart("chartdiv",chartConfig ,0);
             chart.addListener('drawn', function(event) {
