@@ -17,6 +17,7 @@ class Command(BaseCommand):
         print 'Reset db started.'
 
         Entity.objects.all().delete()
+        Question.objects.all().delete()
         print 'db clear done.'
 
         print 'Loading books...'
