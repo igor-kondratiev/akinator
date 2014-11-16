@@ -20,6 +20,7 @@ class Command(BaseCommand):
         print 'db clear done.'
 
         print 'Loading books...'
+        books_list = {}
         with open(BOOKS_FILE, 'rb') as f:
             b_reader = csv.DictReader(f, delimiter=';')
             for book in b_reader:
@@ -27,20 +28,25 @@ class Command(BaseCommand):
                 name = book['name'].decode('cp1251')
                 description = ''
 
-                db_book = Entity(pk=pk, name=name, description=description)
+                db_book = Entity(name=name, description=description)
                 db_book.save()
+
+                books_list[pk] = db_book
 
         print 'Done.'
 
         print 'Loading questions...'
+        questions_list = {}
         with open(QUESTIONS_FILE, 'rb') as f:
             q_reader = csv.DictReader(f, delimiter=';')
             for question in q_reader:
                 pk = question['id_q']
                 text = question['question'].decode('cp1251')
 
-                db_question = Question(pk=pk, text=text)
+                db_question = Question(text=text)
                 db_question.save()
+
+                questions_list[pk] = db_question
 
         print 'Done.'
 
@@ -55,8 +61,8 @@ class Command(BaseCommand):
                 no_count = int(float(distribution['no'].replace(',', '.')) * 100)
                 dm_count = int(float(distribution['does not matter'].replace(',', '.')) * 100)
 
-                book = Entity.objects.get(pk=book_id)
-                question = Question.objects.get(pk=question_id)
+                book = books_list[book_id]
+                question = questions_list[question_id]
 
                 db_distribution = AnswersDistribution(entity=book, question=question, yes_count=yes_count, no_count=no_count, dm_count=dm_count)
                 db_distribution.save()
