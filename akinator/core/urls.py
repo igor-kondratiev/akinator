@@ -6,4 +6,5 @@ urlpatterns = patterns('',
     url('game/next/', 'core.views.process_response', name='process_response'),
     url('game/stats/', 'core.views.current_stats', name='game_stats'),
     url('statistics/', 'core.views.statistics', name='statistics'),
+    url('entities/list/', 'core.views.entities_list', name='entities_list'),
 )

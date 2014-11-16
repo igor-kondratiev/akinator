@@ -37,7 +37,7 @@ class Akinator(object):
         self.__select_question()
 
         questions_count = len(self.__data_source.get_questions_list())
-        self.__max_history_length = 0.7 * questions_count
+        self.__max_history_length = questions_count
 
         self.__history = {}
         self.__hypothesis = None

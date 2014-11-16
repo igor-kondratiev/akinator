@@ -2,7 +2,7 @@ from functools import partial
 from django.db.models import Avg
 from django.http import HttpResponse
 import json
-from core.models import DBDataSource, GameResult
+from core.models import DBDataSource, GameResult, Entity
 from logic.Akinator import Akinator
 from logic.AkinatorDataSource import ANSWERS
 
@@ -116,3 +116,18 @@ def statistics(request):
     }
 
     return JsonResponse(content)
+
+
+def entities_list(request):
+    response = {
+        'entities': [],
+    }
+
+    entities = Entity.objects.all()
+    for entity in entities:
+        response['entities'].append({
+            'key': entity.pk,
+            'name': entity.name,
+        })
+
+    return JsonResponse(response)
